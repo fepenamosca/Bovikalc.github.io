@@ -1,0 +1,79 @@
+<h1><a href="#impact-of-treatment-on-subclinical-mastitis" id="impact-of-treatment-on-subclinical-mastitis">Impact of treatment on subclinical mastitis</a></h1>
+<pre><code>. /* Set the directory */
+. 
+. cd &quot;C:\Users\penam003\Documents\UMN projects\Bovikalc_manuscripts&quot;
+C:\Users\penam003\Documents\UMN projects\Bovikalc_manuscripts
+
+. 
+. use scm_stata
+
+. 
+</code></pre>
+<p>Run generalized linear mixed model</p>
+<pre><code>. meglm high_scc_postpartum i.treatment || farm:, family(binomial) link(logit) n
+&gt; olog 
+
+Mixed-effects GLM                               Number of obs     =        709
+Family: Binomial
+Link:   Logit
+Group variable: farm                            Number of groups  =          3
+
+                                                Obs per group:
+                                                              min =        107
+                                                              avg =      236.3
+                                                              max =        368
+
+Integration method: mvaghermite                 Integration pts.  =          7
+
+                                                Wald chi2(1)      =       9.78
+Log likelihood = -351.15453                     Prob &gt; chi2       =     0.0018
+-------------------------------------------------------------------------------
+high_scc_po~m | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+    treatment |
+    Bovikalc  |  -.5976981   .1911414    -3.13   0.002    -.9723283   -.2230679
+        _cons |  -1.165103   .3951517    -2.95   0.003    -1.939586     -.39062
+--------------+----------------------------------------------------------------
+farm          |
+    var(_cons)|   .4124503   .3722849                      .0703173    2.419251
+-------------------------------------------------------------------------------
+LR test vs. logistic model: chibar2(01) = 30.83       Prob &gt;= chibar2 = 0.0000
+
+. 
+. margins treatment
+
+Adjusted predictions                                       Number of obs = 709
+Model VCE: OIM
+
+Expression: Marginal predicted mean, predict()
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   treatment |
+    Control  |   .2552309   .0707901     3.61   0.000      .116485    .3939769
+   Bovikalc  |    .163663   .0537286     3.05   0.002     .0583569     .268969
+------------------------------------------------------------------------------
+
+. 
+. margins, dydx(treatment)
+
+Conditional marginal effects                               Number of obs = 709
+Model VCE: OIM
+
+Expression: Marginal predicted mean, predict()
+dy/dx wrt:  2.treatment
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   treatment |
+   Bovikalc  |   -.091568   .0337745    -2.71   0.007    -.1577648   -.0253711
+------------------------------------------------------------------------------
+Note: dy/dx for factor levels is the discrete change from the base level.
+
+
+
+</code></pre>
